@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>대기열</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 720px; margin: 40px auto; }
+        fieldset { margin: 16px 0; padding: 16px; border: 1px solid #ddd; border-radius: 8px; }
+        legend { font-weight: bold; }
+        form { margin-top: 8px; }
+        input, button { padding: 8px 12px; margin-right: 6px; }
+        button { cursor: pointer; border-radius: 6px; border: 1px solid #ccc; }
+        button:hover { background: #eef2ff; }
+    </style>
+</head>
+<body>
+<h1>대기열</h1>
+
+<!-- 사용자 -->
+<fieldset>
+    <legend>사용자</legend>
+
+    <form action="/user/register" method="post">
+        <input type="text" name="nickname" placeholder="닉네임 입력" required>
+        <input type="hidden" th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit">신규 등록</button>
+    </form>
+
+    <form action="/user/position" method="post">
+        <input type="text" name="nickname" placeholder="닉네임 입력" required>
+        <input type="hidden" th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit">순서 확인</button>
+    </form>
+
+    <form action="/user/cancel" method="post">
+        <input type="text" name="nickname" placeholder="닉네임 입력" required>
+        <input type="hidden" th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit">대기열 취소</button>
+    </form>
+</fieldset>
+
+<!-- 관리자 -->
+<fieldset>
+    <legend>관리자</legend>
+
+    <form action="/admin/list" method="get">
+        <button type="submit">대기열 보기</button>
+    </form>
+
+    <form action="/admin/dequeue" method="post">
+        <input type="hidden" th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit">첫번째 사람 제외</button>
+    </form>
+
+    <form action="/admin/remove" method="post">
+        <input type="number" name="order" min="1" placeholder="제외할 순서" required>
+        <input type="hidden" th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit">특정 순서 제외</button>
+    </form>
+</fieldset>
+</body>
+</html>

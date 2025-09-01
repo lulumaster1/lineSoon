@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>결과</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 720px; margin: 40px auto; }
+        .msg { padding: 16px; background: #f5f7ff; border: 1px solid #dfe4ff; border-radius: 8px; }
+        a.button { display:inline-block; padding:8px 12px; background:#efefef; text-decoration:none; color:#222; border:1px solid #ddd; border-radius:6px; margin-top:12px }
+        .row{ display:flex; gap:8px; margin-top:12px }
+    </style>
+</head>
+<body>
+<h2>결과</h2>
+<div class="msg" th:text="${message}">메시지</div>
+<div class="row">
+    <a class="button" href="/">홈으로</a>
+    <a class="button" href="/admin/list">관리자 화면</a>
+</div>
+</body>
+</html>

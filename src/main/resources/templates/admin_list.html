@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>관리자 - 대기열</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 900px; margin: 40px auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background: #f9fafb; }
+        form { display: inline; }
+        button { padding: 6px 10px; cursor: pointer; border-radius: 6px; border: 1px solid #ccc; }
+        button:hover { background: #fef2f2; }
+        .toolbar { margin-bottom: 12px; }
+        .toolbar form { margin-right: 8px; }
+    </style>
+</head>
+<body>
+<h2>관리자 - 대기열</h2>
+
+<div class="toolbar">
+    <form action="/" method="get">
+        <button type="submit">홈으로</button>
+    </form>
+
+    <form action="/admin/dequeue" method="post">
+        <input type="hidden" th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit">첫번째 사람 제외</button>
+    </form>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>닉네임</th>
+        <th>등록시각</th>
+        <th>상태</th>
+        <th>액션</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="u, stat : ${users}">
+        <td th:text="${stat.index + 1}">1</td>
+        <td th:text="${u.nickname}">nick</td>
+        <td th:text="${#temporals.format(u.createdAt, 'yyyy-MM-dd HH:mm:ss')}">time</td>
+        <td th:text="${u.status}">WAITING</td>
+        <td>
+            <form th:action="@{/admin/remove(order=${stat.index + 1})}" method="post">
+                <input type="hidden" th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit">이 순서 제외</button>
+            </form>
+        </td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(users)}">
+        <td colspan="5">대기 중인 사용자가 없습니다.</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
